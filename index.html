@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .content {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .word {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4CC5A3;
+        }
+        .transcription {
+            font-size: 24px;
+            color: #ccc;
+        }
+        .definitions {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #e0e0e0;
+        }
+        .definitions span {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .input-container {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            font-size: 24px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            width: 80%;
+            text-align: center;
+        }
+        .correct {
+            color: #4CC5A3;
+        }
+        .incorrect {
+            color: #ff4c4c;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="word" id="word">patch</div>
+        <div class="transcription" id="transcription">/pætʃ/</div>
+        <div class="definitions" id="definitions">
+            <div><span>n.</span> 小块, 斑点; 补丁; 小块地; 眼罩</div>
+            <div><span>vt.</span> 打补丁</div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="input" placeholder="Type the word here" oninput="checkInput()">
+        </div>
+    </div>
+
+    <script>
+        // Array of words to practice
+        const words = [
+            { word: "patch", transcription: "/pætʃ/", definition: "<span>n.</span> 小块, 斑点; 补丁; 小块地; 眼罩 <span>vt.</span> 打补丁" },
+            { word: "apple", transcription: "/ˈæpl/", definition: "<span>n.</span> 苹果" },
+            { word: "water", transcription: "/ˈwɔːtər/", definition: "<span>n.</span> 水" },
+            // Add more words here as needed
+        ];
+
+        let currentWordIndex = 0;
+
+        // Function to display the current word
+        function displayWord() {
+            const wordObj = words[currentWordIndex];
+            document.getElementById("word").innerText = wordObj.word;
+            document.getElementById("transcription").innerText = wordObj.transcription;
+            document.getElementById("definitions").innerHTML = wordObj.definition;
+            document.getElementById("input").value = "";
+            document.getElementById("input").classList.remove("correct", "incorrect");
+        }
+
+        // Check if the input matches the current word
+        function checkInput() {
+            const input = document.getElementById("input");
+            if (input.value.trim().toLowerCase() === words[currentWordIndex].word) {
+                input.classList.add("correct");
+                input.classList.remove("incorrect");
+            } else {
+                input.classList.add("incorrect");
+                input.classList.remove("correct");
+            }
+        }
+
+        // Switch to the next word
+        function nextWord() {
+            currentWordIndex = (currentWordIndex + 1) % words.length;
+            displayWord();
+        }
+
+        // Initial display
+        displayWord();
+
+        // Switch word every 5 seconds
+        setInterval(nextWord, 5000);
+    </script>
+</body>
+</html>
